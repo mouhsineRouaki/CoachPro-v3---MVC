@@ -19,7 +19,5 @@ abstract class User{
         $this->role= $role;
         $this->passwordHashe_user= password_hash($password,PASSWORD_DEFAULT);
     }
-    
 
-    
 }
