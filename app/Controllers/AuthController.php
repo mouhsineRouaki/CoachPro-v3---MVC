@@ -6,7 +6,7 @@ class AuthController{
     public function login() {
         $email = $_POST["email"];
         $password = $_POST["password"];
-        $result = Utilisateur::login($email,$password);
+        $result = User::login($email,$password);
         if ($result['success']) {
             if($result["user"]["role"] === "coach"){
                 header("Location: ../../pages/coach/dashbordCoach.php");
