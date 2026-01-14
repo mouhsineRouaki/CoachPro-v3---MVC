@@ -15,9 +15,9 @@ class AuthController{
         $result = $this->repo->login($email,$password);
         if ($result['success']) {
             if($result["user"]["role"] === "coach"){
-                header("Location: ../../pages/coach/dashbordCoach.php");
+                header("Location: coach/dashboard");
             }else{
-                header("Location: ../../pages/sportif/dashbordSportif.php");
+                header("Location: sportif/dashboard");
             }
             exit();   
         } else {
