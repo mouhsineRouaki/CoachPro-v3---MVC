@@ -2,9 +2,6 @@
 class UserRepository{
 
 
-
-
-
 public function login(string $email, string $password): array {
         $db = Database::getInstance()->getConnection();
         $stmt = $db->prepare("SELECT * FROM utilisateur WHERE email = ?");
@@ -29,4 +26,10 @@ public function login(string $email, string $password): array {
         ];
     }
 
+public function register(Register $register){
+    return $register->register();
 }
+
+
+}
+

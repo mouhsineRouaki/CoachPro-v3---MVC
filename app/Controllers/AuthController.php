@@ -26,20 +26,24 @@ class AuthController{
         }
     }
     public function register() {
-        $email = $_POST["email"];
-        $password = $_POST["password"];
-        $result = User::login($email,$password);
-        if ($result['success']) {
-            if($result["user"]["role"] === "coach"){
-                header("Location: ../../pages/coach/dashbordCoach.php");
-            }else{
-                header("Location: ../../pages/sportif/dashbordSportif.php");
-            }
-            exit();   
-        } else {
-            header("Location: ../../public/index.php?message=" . urlencode($result['message']));
-            exit();      
-        }
+        $register = new Register(
+        $_POST['nom'],
+        $_POST['prenom'],
+        $_POST['email'],
+        $_POST['password'],
+        $_POST['telephone'],
+        $_POST['role'],
+        $_POST['urlImage']
+    );
+        $result = $this->repo->register($register);
+
+    if ($result['success']) {
+        header("Location: /");
+        exit();   
+    } else {
+        header("Location: /");
+        exit();      
+    }
     }
 
     public function logout() {
