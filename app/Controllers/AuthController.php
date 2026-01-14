@@ -1,11 +1,9 @@
 <?php
-
 class AuthController{
-    private $repo ; 
+    private UserRepository $repo ; 
 
     public function __construct(){
-    $this->repo = new UserRepository();
-
+      $this->repo = new UserRepository();
     }
     public function loginForm(){
         require_once __DIR__."../../Views/auth/auth.php";
@@ -22,7 +20,7 @@ class AuthController{
             }
             exit();   
         } else {
-            header("Location: ../../public/index.php?message=" . urlencode($result['message']));
+            header("Location: ");
             exit();      
         }
     }

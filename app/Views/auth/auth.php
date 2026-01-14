@@ -16,7 +16,7 @@
 
         <div class="forms-container">
             <div class="form-control signup-form">
-                <form method="POST" action="../php/auth/authentificationSignUp.php">
+                <form method="POST" action="register">
                     <h2>Inscription</h2>
 
                     <input type="text" placeholder="Nom" name="nom">
@@ -39,7 +39,7 @@
             </div>
 
             <div class="form-control signin-form">
-                <form method="POST" action="../php/auth/authentificationSignIn.php">
+                <form method="POST" action="login">
                     <h2>Connexion</h2>
 
                     <input type="email" placeholder="Email" name="email">
