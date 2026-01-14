@@ -1,25 +1,17 @@
 <?php 
 
-class Coach extends User{
+class Sportif extends User{
     private ?int$id_sportif = null ;
     private ?string $objectif = null ;
     private ?string$niveau= null ;
     private PDO $db; 
     
-    public function __construct(string $nom, string $prenom, string $email, string $password, string $telephone, string $role, ?string $image , ?string $id_sportif,?string $objectif , ?string $niveau ){
-        parent::__construct($nom , $prenom , $email , $password, $telephone , $role , $image );
+    public function __construct($user , $sportif){
+        parent::__construct($user["nom"] , $user["prenom"] , $user["email"] , $user["mot_de_pass"], $user["telephone"] , $user["role"] , $user["img_utilisateur"] );
         $this->db = Database::getInstance()->getConnection();
-        $this->id_sportif = $id_sportif;
-        $this->objectif = $objectif ;
-        $this->niveau = $niveau;
+        $this->id_sportif = $sportif["id_sportif"];
+        $this->objectif = $sportif["objectif"] ;
+        $this->niveau = $sportif["niveau"];
     }
-    public static function getConnectedSportif(){
-        session_start();
-        $db = Database::getInstance()->getConnection();
-        $stmt = $db->prepare("select * from sportif where id_utilisateur = ?");
-        if($stmt->execute([$_SESSION["user_id"]])){
-            return $stmt->fetch(PDO::FETCH_ASSOC);
-        }
-        return null ; 
-    }
+    
 }
