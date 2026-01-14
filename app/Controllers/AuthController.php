@@ -1,4 +1,5 @@
 <?php
+
 class AuthController{
     private UserRepository $repo ; 
 
@@ -20,7 +21,7 @@ class AuthController{
             }
             exit();   
         } else {
-            header("Location: ");
+            header("Location: index");
             exit();      
         }
     }
@@ -37,16 +38,16 @@ class AuthController{
         $result = $this->repo->register($register);
 
     if ($result['success']) {
-        header("Location: /");
+        header("Location: index");
         exit();   
     } else {
-        header("Location: /");
+        header("Location: index");
         exit();      
     }
     }
 
     public function logout() {
         session_destroy();
-        header('Location: /');
+        header('Location: index');
     }
 }

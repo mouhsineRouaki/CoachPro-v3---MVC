@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Signup & Signin</title>
-    <link rel="stylesheet" href="../../../coachprov3/public/assets/css/style.css">
+    <link rel="stylesheet" href="../../../coachprov3/public/assets/css/style2.css">
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
@@ -76,7 +76,7 @@
         <p id="toastMessage"></p>
     </div>
 
-    <script src="../../../coachprov3/public/assets/css/style.css"></script>
+    <script src="../../../coachprov3/public/assets/js/script.js"></script>
 </body>
 
 </html>

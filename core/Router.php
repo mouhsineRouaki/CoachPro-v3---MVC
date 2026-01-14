@@ -1,7 +1,6 @@
 <?php
 session_start();
-require_once __DIR__. "../../vendor/autoloadRepository.php";
-require_once __DIR__. "../../vendor/autoloadModel.php";
+require_once __DIR__ . '../../vendor/autoloadRepository.php';
 
 class Router
 {

@@ -15,7 +15,6 @@ public function login(string $email, string $password): array {
             ];
         }
 
-        session_start();
         $_SESSION['user_id'] = $user['id_utilisateur'];
         $_SESSION['role'] = $user['role'];
 
