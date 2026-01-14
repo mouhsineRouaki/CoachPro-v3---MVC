@@ -2,8 +2,8 @@
 
 $routes = [
     "/" => ["AuthController" , "loginForm"],
-    "/login" => ["AuthController" , "login"],
-    "/register" => ["AuthController" , "register"],
-    "/ajoutJouer" => [],
+    "login" => ["AuthController" , "login"],
+    "coach/dashboard" => ["CoachController" , "dashboard"],
+    "sportif/dashboard" => [],
 ];
 

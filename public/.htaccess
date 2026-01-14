@@ -1,6 +1,6 @@
 RewriteEngine On
 
-RewriteBase /mvcp/public/
+RewriteBase /coachprov3/public/
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d

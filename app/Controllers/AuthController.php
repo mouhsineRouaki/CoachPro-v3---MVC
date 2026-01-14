@@ -1,12 +1,18 @@
 <?php
 class AuthController{
+    private $repo ; 
+
+    public function __construct(){
+    $this->repo = new UserRepository();
+
+    }
     public function loginForm(){
         require_once __DIR__."../../Views/auth/auth.php";
     }
     public function login() {
         $email = $_POST["email"];
         $password = $_POST["password"];
-        $result = User::login($email,$password);
+        $result = $this->repo->login($email,$password);
         if ($result['success']) {
             if($result["user"]["role"] === "coach"){
                 header("Location: ../../pages/coach/dashbordCoach.php");
