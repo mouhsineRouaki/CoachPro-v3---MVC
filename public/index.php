@@ -1,17 +1,8 @@
 <?php
-session_start();
 
-require_once __DIR__ . '/../routes/web.php';
+require_once __DIR__ . '/../config/config.php';
+require_once __DIR__ . '/../core/Database.php';
+require_once __DIR__ . '/../core/Router.php';
 
-$url = $_GET['url'] ?? '/';
-
-if (!isset($routes[$url])) {
-    die('404 - Page not found');
-}
-
-[$controller, $method] = $routes[$url];
-
-require_once __DIR__ . "/../app/Controllers/$controller.php";
-
-$controllerInstance = new $controller();
-$controllerInstance->$method();
+$router = new Router();
+$router->handleRequest();
