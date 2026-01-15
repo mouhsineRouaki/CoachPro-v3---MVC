@@ -1,13 +1,3 @@
-<?php 
-session_start();
-require "../../classeses/coach.php";
-
-$userConnected = Utilisateur::getUserConnected();
-$coachConnected = Coach::getConnectedCoach();
-$coach = new Coach($userConnected,$coachConnected);
-$nextSession = $coach->getNextSportifSeance();
-$history = $coach->getHistoriqueReservation();
-?>
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -92,7 +82,7 @@ $history = $coach->getHistoriqueReservation();
           <button class="inline-flex items-center p-2 hover:bg-gray-100 focus:bg-gray-100 rounded-lg">
             <span class="sr-only">Menu Utilisateur</span>
             <div class="hidden md:flex md:flex-col md:items-end md:leading-tight">
-              <span class="font-semibold"><?= $userConnected["nom"] ?> <?= $userConnected["prenom"] ?></span>
+              <span class="font-semibold"><?= $coach ?> <?= $userConnected["prenom"] ?></span>
               <span class="text-sm text-gray-600"><?= $userConnected["role"] ?> Professionnel</span>
             </div>
             <span class="h-12 w-12 ml-2 sm:ml-3 mr-2 bg-gray-100 rounded-full overflow-hidden">

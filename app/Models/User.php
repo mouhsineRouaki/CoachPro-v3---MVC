@@ -12,8 +12,9 @@ abstract class User{
 
     protected PDO $db;
 
-    public function __construct(string $nom,string $prenom,string $email,string $password,string $telephone,string $role,?string $image = null) {
+    public function __construct($id , string $nom,string $prenom,string $email,string $password,string $telephone,string $role,?string $image = null) {
         $this->db =  Database::getInstance()->getConnection();
+        $this->id = $id ;
         $this->nom = $nom;
         $this->prenom = $prenom;
         $this->email = $email;

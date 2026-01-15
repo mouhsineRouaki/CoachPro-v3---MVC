@@ -7,12 +7,20 @@ class Coach extends User{
     private PDO $db; 
     
     public function __construct($user, $coach ){
-        parent::__construct($user["nom"] , $user["prenom"] , $user["email"] , $user["mot_de_pass"], $user["telephone"] , $user["role"] , $user["img_utilisateur"] );
+        parent::__construct($user["id_utilisateur"],$user["nom"] , $user["prenom"] , $user["email"] , $user["mot_de_pass"], $user["telephone"] , $user["role"] , $user["img_utilisateur"] );
         $this->db = Database::getInstance()->getConnection();
         $this->id_coach = $coach["id_coach"];
         $this->biographie = $coach["biographie"] ;
         $this->niveau = $coach["niveau"];
         $this->annee_exp = $coach["annee_experience"];
+    }
+
+
+    public function __get($name){
+        return $this->$name;
+    }
+    public function __set($name , $value){
+        $this->$name = $value;
     }
     public function getNextSportifSeance(){
         $stmt = $this->db->prepare("select u.nom , u.prenom , u.img_utilisateur , d.date , s.nom_sport , d.heure_debut , d.heure_fin from reservation r
