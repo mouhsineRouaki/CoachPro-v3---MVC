@@ -9,7 +9,7 @@ $routes = [
     "coach/disponibility" => ["CoachController" , "disponibility"],
     "coach/reservations" => ["CoachController" , "reservations"],
     "coach/profil" => ["CoachController" , "profil"],
-    "coach/getDisponibilitiesCoach" => ["CoachController" , "getdisponibilitiesCoach"],
-    "coach/addDisponibilities" => ["CoachController" , "ajouteDisponibilite"],
+    "coach/getDisponibilitiesCoach" => ["DisponibiliteController" , "getdisponibilitiesCoach"],
+    "coach/addDisponibilities" => ["DisponibiliteController" , "ajouteDisponibilite"],
 ];
 

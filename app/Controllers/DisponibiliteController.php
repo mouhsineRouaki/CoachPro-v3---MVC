@@ -1,6 +1,11 @@
 <?php
 class DisponibiliteController{
 
+    private DisponibiliteRepository $repo ; 
+    public function __construct(){
+        $this->repo = new DisponibiliteRepository();
+    }
+
 
 
     public function ajouteDisponibilite(){
@@ -8,7 +13,7 @@ class DisponibiliteController{
     }
 
     public function getdisponibilitiesCoach(){
-        $coach = $this->repo->getConnectedCoach();
+        $coach = $this->repo->repo->getConnectedCoach();
         $dispo = $coach->getDisponibilites();
         echo json_encode($dispo);
     }
