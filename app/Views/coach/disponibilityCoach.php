@@ -352,7 +352,7 @@ function closeEditModal() {
 function addSlot(e) {
   e.preventDefault();
 
-  fetch('../../php/coach/addDisponibilite.php', {
+  fetch('addDisponibilities', {
     method: 'POST',
     headers: {'Content-Type':'application/x-www-form-urlencoded'},
     body: `date=${newDate.value}&startTime=${newStartTime.value}&endTime=${newEndTime.value}`

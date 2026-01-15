@@ -28,7 +28,7 @@ class Disponibilite{
         $stmtCheck->execute([$this->id_coach, $this->date , $this->heure_debut , $this->heure_fin]);
         $result = $stmtCheck->fetchAll(PDO::FETCH_ASSOC);
         if(!$result){
-            $stmt = $this->db->prepare("insert into disponibilite values (null , ?,?,?,?,0)");
+            $stmt = $this->db->prepare("insert into disponibilite (id_coach, date, heure_debut, heure_fin, isreserved) values ( ?,?,?,?,false)");
             if($stmt->execute([$this->id_coach , $this->date  , $this->heure_debut , $this->heure_fin])){
                 return ['success' => true,'message' => 'Disponibilité ajoutee avec succès'];
             }else{
