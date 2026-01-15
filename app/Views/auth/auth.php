@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -5,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Signup & Signin</title>
-    <link rel="stylesheet" href="../../public/assets/css/style.css">
+    <link rel="stylesheet" href="../../../coachprov3/public/assets/css/style2.css">
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
@@ -15,7 +16,7 @@
 
         <div class="forms-container">
             <div class="form-control signup-form">
-                <form method="POST" action="../php/auth/authentificationSignUp.php">
+                <form method="POST" action="register">
                     <h2>Inscription</h2>
 
                     <input type="text" placeholder="Nom" name="nom">
@@ -38,7 +39,7 @@
             </div>
 
             <div class="form-control signin-form">
-                <form method="POST" action="../php/auth/authentificationSignIn.php">
+                <form method="POST" action="login">
                     <h2>Connexion</h2>
 
                     <input type="email" placeholder="Email" name="email">
@@ -75,7 +76,7 @@
         <p id="toastMessage"></p>
     </div>
 
-    <script src="../../public/assets/js/script.js"></script>
+    <script src="../../../coachprov3/public/assets/js/script.js"></script>
 </body>
 
 </html>
