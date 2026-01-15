@@ -168,7 +168,7 @@
 
 <script>
   let reservation=[];
-  fetch("../../php/coach/getReservationsCoach.php")
+  fetch("getReservations")
       .then(res => res.json())
       .then(data => {
         reservation= data.map(r => ({
@@ -314,7 +314,7 @@
   function confirmReservation(id) {
   let reservationO =reservation.find(r => r.id_reservation === id);
   console.log(reservationO)
-  fetch('../../php/coach/confirmReservation.php', {
+  fetch('confirmReservation', {
     method: 'POST',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     body: `id_reservation=${id}&id_disponibilite=${reservationO.id_disponibilite}`

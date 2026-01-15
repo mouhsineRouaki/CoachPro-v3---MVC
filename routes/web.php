@@ -7,12 +7,13 @@ $routes = [
     "register" => ["AuthController" , "register"],
     "coach/dashboard" => ["CoachController" , "dashboard"],
     "coach/disponibility" => ["CoachController" , "disponibility"],
-    "coach/reservations" => ["CoachController" , "reservations"],
+    "coach/reservations" => ["ReservationController" , "reservations"],
     "coach/profil" => ["CoachController" , "profil"],
     "coach/getDisponibilitiesCoach" => ["DisponibiliteController" , "getdisponibilitiesCoach"],
     "coach/addDisponibilities" => ["DisponibiliteController" , "ajouteDisponibilite"],
     "coach/updateDisponibilities" => ["DisponibiliteController" , "modifierDisponibilite"],
     "coach/deleteDisponibilities" => ["DisponibiliteController" , "supprimerDisponibilite"],
     "coach/getReservations" => ["ReservationController" , "getReservations"],
+    "coach/confirmReservation" => ["ReservationController" , "confirmReservation"],
 ];
 

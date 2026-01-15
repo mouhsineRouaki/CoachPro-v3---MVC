@@ -100,7 +100,23 @@ class Coach extends User{
         );
         return $stmt2->execute([$id_disponibilite]);
 
-}
+    }
+    public  function annullerResevation($id_reservation,$id_disponibilite){
+        $db = Database::getInstance()->getConnection();
+        $stmt = $db->prepare(
+            "UPDATE reservation 
+             SET status = 'annulee' 
+             WHERE id_reservation = ?"
+        );
+        $stmt->execute([$id_reservation]);
+
+        $stmt2 = $db->prepare(
+            "UPDATE disponibilite 
+             SET isReserved = 0
+             WHERE id_disponibilite = ?"
+        );
+        return $stmt2->execute([$id_disponibilite]);
+    }
 
 
 
