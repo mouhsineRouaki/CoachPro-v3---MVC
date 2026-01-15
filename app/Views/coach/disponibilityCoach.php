@@ -233,13 +233,13 @@ function formatDate(dateStr) {
 }
 
 function createSlotCard(slot) {
-  const statusColor = slot.isReserved == 1
+  const statusColor = slot.isreserved == true
     ? 'bg-green-100 text-green-800'
     : 'bg-purple-100 text-purple-800';
 
-  const statusText = slot.isReserved == 1 ? 'Réservé' : 'Disponible';
+  const statusText = slot.isreserved == true ? 'Réservé' : 'Disponible';
 
-  const statusIcon = slot.isReserved == 1
+  const statusIcon = slot.isreserved == true  
     ? `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
          d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />`
     : `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -263,7 +263,7 @@ function createSlotCard(slot) {
     </div>
 
     <div class="flex gap-2">
-      ${slot.isReserved == 0 ? `
+      ${slot.isreserved == false ? `
         <button onclick="openEditModal(${slot.id_disponibilite})"
           class="flex-1 px-4 py-2 bg-purple-600 text-white font-semibold rounded-lg hover:bg-purple-700 transition">
           Modifier
@@ -288,9 +288,9 @@ function displaySlots() {
   let filtered = availabilitySlots;
 
   if (currentFilter === 'available') {
-    filtered = availabilitySlots.filter(s => s.isReserved == 0);
+    filtered = availabilitySlots.filter(s => s.isreserved == false);
   } else if (currentFilter === 'reserved') {
-    filtered = availabilitySlots.filter(s => s.isReserved == 1);
+    filtered = availabilitySlots.filter(s => s.isreserved == true);
   }
 
   if (filtered.length === 0) {
@@ -319,6 +319,7 @@ function loadSlots() {
     .then(res => res.json())
     .then(data => {
       availabilitySlots = data;
+      console.log(data)
       displaySlots();
     });
 }
