@@ -62,6 +62,15 @@ class Coach extends User{
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $result;
     }
+    public  function getDisponibilites(){
+        $db = Database::getInstance()->getConnection();
+        $stmt = $db->prepare(
+            "select *  from disponibilite  
+             WHERE id_coach = ?"
+        );
+        $stmt->execute([$this->id_coach]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
     public function getReservations(){
         $repo = new CoachRepository();
         $id_coach = $repo->getConnectedCoach()->id_coach;

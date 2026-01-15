@@ -315,7 +315,7 @@ function filterSlots(filter) {
 }
 
 function loadSlots() {
-  fetch('../../php/coach/getDisponibilites.php')
+  fetch('getDisponibilitiesCoach')
     .then(res => res.json())
     .then(data => {
       availabilitySlots = data;

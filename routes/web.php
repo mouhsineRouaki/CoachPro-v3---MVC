@@ -6,6 +6,10 @@ $routes = [
     "login" => ["AuthController" , "login"],
     "register" => ["AuthController" , "register"],
     "coach/dashboard" => ["CoachController" , "dashboard"],
-    "sportif/dashboard" => ["SportifController" , "dashboard"],
+    "coach/disponibility" => ["CoachController" , "disponibility"],
+    "coach/reservations" => ["CoachController" , "reservations"],
+    "coach/profil" => ["CoachController" , "profil"],
+    "coach/getDisponibilitiesCoach" => ["CoachController" , "getdisponibilitiesCoach"],
+    "coach/addDisponibilities" => ["CoachController" , "ajouteDisponibilite"],
 ];
 
