@@ -90,9 +90,9 @@ $sports = getSports();
             <input type="file" id="imageUpload" accept="image/*" class="hidden">
           </div>
           <div>
-            <h2 class="text-2xl font-bold text-gray-800"><?= $user["nom"];?> <?= $user["prenom"];?></h2>
+            <h2 class="text-2xl font-bold text-gray-800"><?= $coach->nom;?> <?= $coach->prenom;?></h2>
             <p class="text-gray-600">Coach Professionnel</p>
-            <p class="text-sm text-gray-500">Membre depuis le <?= $user["dateU"];?></p>
+            <p class="text-sm text-gray-500">Membre depuis le <?= $user->dateC;?></p>
           </div>
         </div>
       </div>
@@ -125,29 +125,29 @@ $sports = getSports();
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">Nom</label>
-                <input type="text" name="nom" id="nom" value="<?= $user["nom"] ?>" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                <input type="text" name="nom" id="nom" value="<?= $coach->nom ?>" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
               </div>
               <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">Prénom</label>
-                <input type="text" id="prenom" name="prenom" value="<?= $user["prenom"] ?>" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                <input type="text" id="prenom" name="prenom" value="<?= $coach->prenom ?>" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
               </div>
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
-                <input type="email" id="email" name="email" value="<?= $user["email"] ?>" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                <input type="email" id="email" name="email" value="<?= $user->email ?>" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
               </div>
               <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">Téléphone</label>
-                <input type="tel" name="tel" id="tel" value="<?= $user["telephone"] ?>" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                <input type="tel" name="tel" id="tel" value="<?= $coach->telephone ?>" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
               </div>
             </div>
 
             <div>
               <label class="block text-sm font-medium text-gray-700 mb-2">Niveau</label>
               <select id="niveau" name="niveau" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
-                <option value="<?= $coach["niveau"] ?>" selected><?= $coach["niveau"] ?></option>
+                <option value="<?= $$coach->niveau ?>" selected><?= $coach->niveau ?></option>
                 <option value="Débutant">Débutant</option>
                 <option value="Intermédiaire">Intermédiaire</option>
                 <option value="Avancé" >Avancé</option>

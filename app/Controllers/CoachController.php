@@ -13,6 +13,12 @@ class CoachController{
     public function disponibility(){
         require_once __DIR__."../../Views/coach/disponibilityCoach.php";
     }
+    public function profil(){
+        $coach = $this->repo->getConnectedCoach();
+        $sportRepo = new SportRepository();
+        $sports = $sportRepo->getAllSports();
+        require_once __DIR__."../../Views/coach/profilCoach.php";
+    }
     
     
     

@@ -6,7 +6,7 @@ class Coach extends User{
     private $annee_exp= null ;
     
     public function __construct($user, $coach ){
-        parent::__construct($user["id_utilisateur"],$user["nom"] , $user["prenom"] , $user["email"] , $user["mot_de_pass"], $user["telephone"] , $user["role"] , $user["img_utilisateur"] );
+        parent::__construct($user["id_utilisateur"],$user["nom"] , $user["prenom"] , $user["email"] , $user["mot_de_pass"], $user["telephone"] , $user["role"] , $user["img_utilisateur"] ,$user["date_creation"] );
         $this->id_coach = $coach["id_coach"];
         $this->biographie = $coach["biographie"] ;
         $this->niveau = $coach["niveau"];
