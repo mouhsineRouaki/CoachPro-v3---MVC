@@ -4,11 +4,9 @@ class Coach extends User{
     private ?string $biographie= null ;
     private ?string $niveau= null ; 
     private $annee_exp= null ;
-    private PDO $db; 
     
     public function __construct($user, $coach ){
         parent::__construct($user["id_utilisateur"],$user["nom"] , $user["prenom"] , $user["email"] , $user["mot_de_pass"], $user["telephone"] , $user["role"] , $user["img_utilisateur"] );
-        $this->db = Database::getInstance()->getConnection();
         $this->id_coach = $coach["id_coach"];
         $this->biographie = $coach["biographie"] ;
         $this->niveau = $coach["niveau"];
@@ -33,7 +31,8 @@ class Coach extends User{
             order by d.date desc 
             limit 1 
         ");
-        $id_coach = Coach::getConnectedCoach()["id_coach"];
+        $repo = new CoachRepository();
+        $id_coach = $repo->getConnectedCoach()->id_coach;
         $stmt->execute([$id_coach]);
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         return $result;
@@ -57,13 +56,15 @@ class Coach extends User{
             where r.id_coach =  ?
             order by d.date desc
         ");
-        $id_coach = new CoachRepository()->getConnectedCoach()["id_coach"];
+        $repo = new CoachRepository();
+        $id_coach = $repo->getConnectedCoach()->id_coach;
         $stmt->execute([$id_coach]);
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $result;
     }
     public function getReservations(){
-        $id_coach =  Coach::getConnectedCoach()["id_coach"];
+        $repo = new CoachRepository();
+        $id_coach = $repo->getConnectedCoach()->id_coach;
         $stmt = $this->db->prepare("SELECT r.id_reservation,d.date ,d.id_disponibilite,d.heure_debut,d.heure_fin,s.nom_sport,u.nom,u.prenom,u.img_utilisateur , r.status,u.telephone FROM reservation r
             INNER JOIN sportif sp on sp.id_sportif = r.id_sportif 
             INNER JOIN utilisateur u on u.id_utilisateur = sp.id_utilisateur 

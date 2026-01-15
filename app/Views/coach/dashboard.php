@@ -21,7 +21,7 @@
       </a>
       <div class="flex-grow flex flex-col justify-between text-gray-500 bg-gray-800">
         <nav class="flex flex-col mx-4 my-6 space-y-4">
-          <a href="./dashbordCoach.php"
+          <a href="coach/dashboard"
             class="inline-flex items-center justify-center py-3 text-purple-600 bg-white rounded-lg">
             <span class="sr-only">Dashboard</span>
             <svg aria-hidden="true" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-6 w-6">
@@ -29,7 +29,7 @@
                 d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
             </svg>
           </a>
-          <a href="./reservationCoach.php"
+          <a href="coach/reservation"
             class="inline-flex items-center justify-center py-3 hover:text-gray-400 hover:bg-gray-700 focus:text-gray-400 focus:bg-gray-700 rounded-lg">
             <span class="sr-only">Réservations</span>
             <svg aria-hidden="true" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-6 w-6">
@@ -37,7 +37,7 @@
                 d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
             </svg>
           </a>
-          <a href="./disponibilityCoach.php"
+          <a href="coach/disponibility"
             class="inline-flex items-center justify-center py-3 hover:text-gray-400 hover:bg-gray-700 focus:text-gray-400 focus:bg-gray-700 rounded-lg">
             <span class="sr-only">Disponibilités</span>
             <svg aria-hidden="true" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-6 w-6">
@@ -45,7 +45,7 @@
                 d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
           </a>
-          <a href="./profilCoach.php"
+          <a href="coach/profil"
             class="inline-flex items-center justify-center py-3 hover:text-gray-400 hover:bg-gray-700 focus:text-gray-400 focus:bg-gray-700 rounded-lg">
             <span class="sr-only">Mon Profil</span>
             <svg aria-hidden="true" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-6 w-6">
@@ -82,11 +82,11 @@
           <button class="inline-flex items-center p-2 hover:bg-gray-100 focus:bg-gray-100 rounded-lg">
             <span class="sr-only">Menu Utilisateur</span>
             <div class="hidden md:flex md:flex-col md:items-end md:leading-tight">
-              <span class="font-semibold"><?= $coach ?> <?= $userConnected["prenom"] ?></span>
-              <span class="text-sm text-gray-600"><?= $userConnected["role"] ?> Professionnel</span>
+              <span class="font-semibold"><?= $coach->id ?> <?= $coach->prenom ?></span>
+              <span class="text-sm text-gray-600"><?= $coach->role ?> Professionnel</span>
             </div>
             <span class="h-12 w-12 ml-2 sm:ml-3 mr-2 bg-gray-100 rounded-full overflow-hidden">
-              <img src="<?= $userConnected["img_utilisateur"] ?>" alt="photo de profil" class="h-full w-full object-cover">
+              <img src="<?= $coach->image ?>" alt="photo de profil" class="h-full w-full object-cover">
             </span>
             <svg aria-hidden="true" viewBox="0 0 20 20" fill="currentColor"
               class="hidden sm:block h-6 w-6 text-gray-300">
