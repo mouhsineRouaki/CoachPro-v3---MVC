@@ -375,7 +375,7 @@ function updateSlot(e) {
   e.preventDefault();
   console.log(editDate.value)
 
-  fetch('../../php/coach/updateDisponibilite.php', {
+  fetch('updateDisponibilities', {
     method: 'POST',
     headers: {'Content-Type':'application/x-www-form-urlencoded'},
     body: `id=${editId.value}&date=${editDate.value}&startTime=${editStartTime.value}&endTime=${editEndTime.value}`

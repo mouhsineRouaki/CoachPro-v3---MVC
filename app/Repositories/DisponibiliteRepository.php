@@ -1,8 +1,8 @@
 <?php
 class DisponibiliteRepository{
-     private CoachRepository $repo ;
+     private CoachRepository $coachRepository;
     public function __construct(){
-        $this->repo= new CoachRepository();
+        $this->coachRepository= new CoachRepository();
     }
 
     public function __get($name){
@@ -11,7 +11,7 @@ class DisponibiliteRepository{
 
     public function ajouteDisponibilite()
     {
-        $coach = $this->repo->getConnectedCoach();
+        $coach = $this->coachRepository->getConnectedCoach();
         $id_coach = $coach->id_coach;
 
         $date = $_POST['date'];
@@ -39,7 +39,7 @@ class DisponibiliteRepository{
 
     public function ModiferDisponibilite()
     {
-        $coach = $this->repo->getConnectedCoach();
+        $coach = $this->coachRepository->getConnectedCoach();
         $id_coach = $coach->id_coach;
         
         $id = $_POST['id'] ?? null;
@@ -47,8 +47,8 @@ class DisponibiliteRepository{
         $start = $_POST['startTime'] ?? null;
         $end = $_POST['endTime'] ?? null;
 
-        $heure_debut = $start . ":00";
-        $heure_fin = $end . ":00";
+        $heure_debut = $start;
+        $heure_fin = $end;
 
         if (!$id || !$id_coach || !$date || !$start || !$end) {
             echo json_encode([
