@@ -15,6 +15,8 @@ class CoachRepository
         return new Coach($user, $coach);
     }
 
+    
+
 
 
 }

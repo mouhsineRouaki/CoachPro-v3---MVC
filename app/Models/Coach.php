@@ -117,8 +117,63 @@ class Coach extends User{
         );
         return $stmt2->execute([$id_disponibilite]);
     }
+    public function updateInfo(){
+        parent::updateInfoUser();
+        $stmt = $this->db->prepare("update coach set niveau = ? , biographie = ? where id_coach = ?");
+        if($stmt->execute([$this->niveau,$this->biographie,$this->id_coach])){
+            return ['success'=>true , 'message'=>"bien update"];
+        }else{
+            return ['success'=>true , 'message'=>"ne pas update"];
+        }
+    }
+    public function addSport($id_sport){
+        $stmt = $this->db->prepare("insert into coach_sport values (?,?)");
+        if($stmt->execute([$this->id_coach,$id_sport])){
+            return ['success'=>true , 'message'=>"bien ajouer le sport"];
+        }
+    }
+    public function addExperience($domaine , $duree , $dateDebut , $dateFin){
+        $stmt = $this->db->prepare("insert into experiences values (null , ?,?,?,?,?)");
+        if($stmt->execute([$this->id_coach,$dateDebut, $dateFin ,$duree, $domaine])){
+            return ['success'=>true , 'message'=>"bien ajouter lexperience "];
+        }
+    }
+    public function deleteSport($id_sport){
+        $stmt = $this->db->prepare("delete from coach_sport where id_sport = ? , id_coach = ? ");
+        if($stmt->execute([$this->id_coach,$id_sport])){
+            return ['success'=>true , 'message'=>"bien supprimer le sport "];
+        }
+    }
+    public function deleteExperience($id_sport){
+        $stmt = $this->db->prepare("delete from experiences  where id_coach = ? ");
+        if($stmt->execute([$this->id_coach])){
+            return ['success'=>true , 'message'=>"bien supprimer"];
+        }
+    }
+    public  function getExperiencesCoach(){
+        $stmt = $this->db->prepare("SELECT domaine, date_debut, date_fin, duree
+            FROM experiences
+            WHERE id_coach = ?
+            ORDER BY date_debut DESC
+        ");
+        $stmt->execute([$this->id_coach]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    public  function getSportCoachConnected(){
 
-    public function updateInfoUser(){
+        $stmt = $this->db->prepare("select s.id_sport,s.nom_sport,s.description_sport from coach_sport cs 
+            INNER JOIN sport s on s.id_sport = cs.id_sport
+            INNER JOIN coach c on c.id_coach = cs.id_coach
+            where c.id_coach = ?
+        ");
+        $stmt->execute([$this->id_coach]);
+        return  $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    }
+    public  function getExperienceCoachConnected(){
+        $stmt = $this->db->prepare("select * from experiences where id_coach = ?");
+        $stmt->execute([$this->id_coach]);
+        return  $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     }
 

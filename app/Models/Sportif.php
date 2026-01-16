@@ -17,9 +17,5 @@ class Sportif extends User{
     public function __set($name , $value){
         $this->$name = $value ;
     }
-
-    public function updateInfoUser(){
-
-    }
     
 }
