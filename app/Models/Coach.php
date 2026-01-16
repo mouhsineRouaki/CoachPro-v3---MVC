@@ -133,7 +133,7 @@ class Coach extends User{
         }
     }
     public function addExperience($domaine , $duree , $dateDebut , $dateFin){
-        $stmt = $this->db->prepare("insert into experiences values (null , ?,?,?,?,?)");
+        $stmt = $this->db->prepare("insert into experiences values (?,?,?,?,?)");
         if($stmt->execute([$this->id_coach,$dateDebut, $dateFin ,$duree, $domaine])){
             return ['success'=>true , 'message'=>"bien ajouter lexperience "];
         }

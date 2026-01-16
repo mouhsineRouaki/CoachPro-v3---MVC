@@ -28,6 +28,7 @@ class CoachController
 
     public function updateProfil()
     {
+        header('Content-Type: application/json');
         $action = $_POST['action'] ?? null;
         $coach = $this->repo->getConnectedCoach();
         $id_coach = $coach->id_coach;

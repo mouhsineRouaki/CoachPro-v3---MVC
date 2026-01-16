@@ -330,7 +330,7 @@
 
 
 function apiRequest(data) {
-  return fetch('../../php/Coach/profileCoach.php', {
+  return fetch('updateProfil', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'

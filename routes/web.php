@@ -15,5 +15,6 @@ $routes = [
     "coach/deleteDisponibilities" => ["DisponibiliteController" , "supprimerDisponibilite"],
     "coach/getReservations" => ["ReservationController" , "getReservations"],
     "coach/confirmReservation" => ["ReservationController" , "confirmReservation"],
+    "coach/updateProfil" => ["CoachController" , "updateProfil"],
 ];
 
