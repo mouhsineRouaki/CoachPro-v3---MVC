@@ -3,9 +3,11 @@ class SportifController{
 
     private SportifRepository $repo ; 
     private SportRepository $sportRepository;
+    private CoachRepository $coachRepository;
     public function __construct(){
         $this->repo = new SportifRepository();
         $this->sportRepository = new SportRepository();
+        $this->coachRepository = new CoachRepository();
     }
 
     public function dashboard(){
@@ -38,10 +40,10 @@ class SportifController{
                 alt="'.$coach['nom'].' '.$coach['prenom'].'" 
                 class="w-full h-48 object-cover rounded-lg mb-4">
             <h3 class="text-xl font-bold text-gray-800">'.$coach['nom'].' '.$coach['prenom'].'</h3>
-            <p class="text-purple-600 font-semibold text-sm mb-2">'.$coach['annee_experience'].' ans d\'expérience</p>
+            <p class="text-purple-600 font-semibold text-sm mb-2">1 ans d\'expérience</p>
             <div class="flex flex-wrap gap-2 mb-4">'.$disciplinesHtml.'</div>
             <button class="w-full py-2 bg-purple-600 text-white font-semibold rounded-lg hover:bg-purple-700 transition">
-                <a href="../../pages/Sportif/detailsCoach.php?id_coach='.$coach['id_coach'].'">Voir le profil</a>
+                <a href="coach/'.$coach['id_coach'].'">Voir le profil</a>
             </button>
         </div>';
     }
@@ -57,6 +59,21 @@ class SportifController{
             $html.= self::createCoachCard($c);
         }
         echo $html;
+    }
+
+    public function detailsCoatch($id){
+        $sportif = $this->repo->getConnectedSportif();
+        $id_sportif =  $sportif->id_sportif;
+        $coach = $this->coachRepository->getCoachById($id);
+        $sports = $this->coachRepository->getSportsCoach($id);
+        $experiences = $this->coachRepository->getExperiencesCoach($id);
+        $disponibilites = $this->coachRepository->getdisponibiliteCoach($id);
+        require_once __DIR__."../../Views/sportif/detailsCoach.php";
+
+
+        
+
+
     }
     public function getCoachess(){
         $coaches = $this->repo->getCoach();

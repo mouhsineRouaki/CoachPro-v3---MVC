@@ -30,39 +30,56 @@ class SportifRepository
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         return $result["total"];
     }
-    public  function getCoach($queryR = ""){
-        $db = Database::getInstance()->getConnection();
-        $query = "%".$queryR."%";
-        if(empty($queryR)){
-        $stmt = $db->prepare("
-            SELECT c.*, u.nom,u.img_utilisateur, u.prenom, u.email, u.telephone, c.biographie, c.niveau,
-               GROUP_CONCAT(DISTINCT s.nom_sport SEPARATOR ', ') as sports
-            FROM coach c
-            INNER JOIN utilisateur u ON c.id_utilisateur = u.id_utilisateur
-            LEFT JOIN coach_sport cs ON c.id_coach = cs.id_coach
-            LEFT JOIN sport s ON cs.id_sport = s.id_sport
-            GROUP BY c.id_coach
-            ORDER BY u.nom ASC
-        ");
-        $stmt->execute();
-        }else{
-            $stmt = $db->prepare("
-            SELECT c.*, u.nom, u.prenom, u.email, u.telephone, c.biographie, c.niveau,
-               GROUP_CONCAT(DISTINCT s.nom_sport SEPARATOR ', ') as sports
-            FROM coach c
-            INNER JOIN utilisateur u ON c.id_utilisateur = u.id_utilisateur
-            LEFT JOIN coach_sport cs ON c.id_coach = cs.id_coach
-            LEFT JOIN sport s ON cs.id_sport = s.id_sport
-            where u.nom like ? or u.prenom like ?
-            GROUP BY c.id_coach
-            ORDER BY u.nom ASC
-        ");
-        $stmt->execute([$query,$query]);
-        }
-        
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    public function getCoach($queryR = "")
+{
+    $db = Database::getInstance()->getConnection();
+    $query = "%".$queryR."%";
 
+    $sql = "
+        SELECT 
+            c.id_coach,
+            c.biographie,
+            c.niveau,
+            u.nom,
+            u.prenom,
+            u.email,
+            u.telephone,
+            u.img_utilisateur,
+            STRING_AGG(DISTINCT s.nom_sport, ', ') AS sports
+        FROM coach c
+        INNER JOIN utilisateur u ON c.id_utilisateur = u.id_utilisateur
+        LEFT JOIN coach_sport cs ON c.id_coach = cs.id_coach
+        LEFT JOIN sport s ON cs.id_sport = s.id_sport
+    ";
+
+    if (!empty($queryR)) {
+        $sql .= " WHERE u.nom ILIKE ? OR u.prenom ILIKE ? ";
     }
+
+    $sql .= "
+        GROUP BY 
+            c.id_coach,
+            c.biographie,
+            c.niveau,
+            u.nom,
+            u.prenom,
+            u.email,
+            u.telephone,
+            u.img_utilisateur
+        ORDER BY u.nom ASC
+    ";
+
+    $stmt = $db->prepare($sql);
+
+    if (!empty($queryR)) {
+        $stmt->execute([$query, $query]);
+    } else {
+        $stmt->execute();
+    }
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
 
 }
 
