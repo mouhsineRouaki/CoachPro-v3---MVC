@@ -14,37 +14,79 @@ class CoachRepository
         $coach = $stmt1->fetch(PDO::FETCH_ASSOC);
         return new Coach($user, $coach);
     }
+    public  function getCoachById($id_coach){
+        $db = Database::getInstance()->getConnection();
+        $stmt = $db->prepare("SELECT 
+        c.id_coach,
+        c.biographie,
+        c.niveau,
+        u.img_utilisateur,
+        u.nom,
+        u.prenom,
+        u.email,
+        u.telephone,
+        STRING_AGG(DISTINCT s.nom_sport, ', ') AS sports
+    FROM coach c
+    INNER JOIN utilisateur u ON c.id_utilisateur = u.id_utilisateur
+    LEFT JOIN coach_sport cs ON c.id_coach = cs.id_coach
+    LEFT JOIN sport s ON cs.id_sport = s.id_sport
+    WHERE c.id_coach = ?
+    GROUP BY 
+        c.id_coach,
+        c.biographie,
+        c.niveau,
+        u.img_utilisateur,
+        u.nom,
+        u.prenom,
+        u.email,
+        u.telephone
+    ORDER BY u.nom ASC
 
-
-
-
-    public function ajouteDisponibilite()
-    {
-        $coach = self::getConnectedCoach();
-        $id_coach = $coach->id_coach;
-
-        $date = $_POST['date'];
-        $start = $_POST['startTime'];
-        $end = $_POST['endTime'];
-
-
-        if (!$date || !$start || !$end) {
-            echo json_encode([
-                'success' => false,
-                'message' => 'Donnees manquantes'
-            ]);
-            exit;
-        }
-        if ($start < "08:00" || $end > "18:00" || $start >= $end) {
-            echo json_encode([
-                'success' => false,
-                'message' => 'Heures hors du temps de travail (08:00 - 18:00)'
-            ]);
-            exit;
-        }
-        $disponibilite = new Disponibilite(null, $id_coach, $date, $start, $end);
-        echo json_encode($disponibilite->ajouterDisponibilite());
+        ");
+        $stmt->execute([$id_coach]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+    public  function getSportsCoach($id_coach){
+        $db = Database::getInstance()->getConnection();
+        $stmt = $db->prepare("SELECT s.id_sport, s.nom_sport FROM coach_sport cs
+            JOIN sport s ON s.id_sport = cs.id_sport
+            WHERE cs.id_coach = ?
+        ");
+        $stmt->execute([$id_coach]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    public  function getExperiencesCoach($id_coach){
+        $db = Database::getInstance()->getConnection();
+        $stmt = $db->prepare("SELECT domaine, date_debut, date_fin, duree
+            FROM experiences
+            WHERE id_coach = ?
+            ORDER BY date_debut DESC
+        ");
+        $stmt->execute([$id_coach]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+     public  function getdisponibiliteCoach($id_coach){
+        $db = Database::getInstance()->getConnection();
+        $stmt = $db->prepare("
+    SELECT 
+        id_disponibilite,
+        date::date AS date,
+        heure_debut::time AS heure_debut,
+        heure_fin::time AS heure_fin,
+        isReserved
+    FROM disponibilite
+    WHERE id_coach = ?
+    ORDER BY date, heure_debut
+");
+        $stmt->execute([$id_coach]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+
+    
+
+
 
 }
 

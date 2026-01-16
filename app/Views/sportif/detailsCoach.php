@@ -1,63 +1,3 @@
-<?php
-require_once "../../config/connexion.php";
-require_once "../../php/Sportif/functionSportif.php";
-require "../../php/authentification/checkConnecter.php"; 
-$sportif = getSportif();
-$id_sportif = $sportif["id_sportif"];
-
-if (!isset($_GET['id_coach']) || !is_numeric($_GET['id_coach'])) {
-    die("Coach invalide");
-}
-$id_coach = (int) $_GET['id_coach'];
-
-$sqlCoach = "
-    SELECT c.id_coach,u.nom,u.prenom,u.email,u.telephone,c.biographie,c.coach_img,c.niveau FROM coach c
-    JOIN utilisateur u ON u.id_utilisateur = c.id_utilisateur
-    WHERE c.id_coach = ?
-";
-$stmt = $conn->prepare($sqlCoach);
-$stmt->bind_param("i", $id_coach);
-$stmt->execute();
-$res = $stmt->get_result();
-
-if ($res->num_rows === 0) {
-    die("Coach introuvable");
-}
-$coach = $res->fetch_assoc();
-
-$sqlSports = "
-    SELECT s.id_sport, s.nom_sport FROM coach_sport cs
-    JOIN sport s ON s.id_sport = cs.id_sport
-    WHERE cs.id_coach = ?
-";
-$stmt = $conn->prepare($sqlSports);
-$stmt->bind_param("i", $id_coach);
-$stmt->execute();
-$sports = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
-
-$sqlExp = "
-    SELECT domaine, date_debut, date_fin, duree
-    FROM experiences
-    WHERE id_coach = ?
-    ORDER BY date_debut DESC
-";
-$stmt = $conn->prepare($sqlExp);
-$stmt->bind_param("i", $id_coach);
-$stmt->execute();
-$experiences = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
-
-$sqlDispo = "
-    SELECT DATE(date) AS date, TIME(heure_debut) AS heure_debut, TIME(heure_fin) AS heure_fin, isReserved
-    FROM disponibilite
-    WHERE id_coach = ?
-    ORDER BY date, heure_debut
-";
-$stmt = $conn->prepare($sqlDispo);
-$stmt->bind_param("i", $id_coach);
-$stmt->execute();
-$disponibilites = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
-?>
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -140,7 +80,7 @@ $disponibilites = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
                         <div class="h-32 bg-gradient-to-r from-purple-600 to-purple-400"></div>
                         <div class="relative px-6 pb-6">
                             <div class="flex justify-center -mt-16 mb-4">
-                                <img src="<?= htmlspecialchars($coach['coach_img']) ?>" alt="Photo du coach" class="w-32 h-32 rounded-full border-4 border-white shadow-lg object-cover">
+                                <img src="<?= htmlspecialchars($coach['img_utilisateur']) ?>" alt="Photo du coach" class="w-32 h-32 rounded-full border-4 border-white shadow-lg object-cover">
                             </div>
                             <h2 class="text-2xl font-bold text-center text-gray-800"><?= htmlspecialchars($coach['prenom'] . ' ' . $coach['nom']) ?></h2>
                             <p class="text-center text-purple-600 font-semibold mb-4">Niveau: <?= htmlspecialchars($coach['niveau']) ?></p>
@@ -232,9 +172,9 @@ $disponibilites = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
                                     <h4 class="font-bold text-gray-800 mb-3"><?= date('l d F Y', strtotime($date)) ?></h4>
                                     <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
                                         <?php foreach($slots as $slot): ?>
-                                            <div class="px-3 py-2 rounded-lg text-center text-sm font-medium <?= $slot['isReserved'] ? 'bg-gray-200 text-gray-500' : 'bg-green-100 text-green-700' ?>">
+                                            <div class="px-3 py-2 rounded-lg text-center text-sm font-medium <?= $slot['isreserved'] ? 'bg-gray-200 text-gray-500' : 'bg-green-100 text-green-700' ?>">
                                                 <?= $slot['heure_debut'] ?> - <?= $slot['heure_fin'] ?>
-                                                <?php if($slot['isReserved']): ?>
+                                                <?php if($slot['isreserved']): ?>
                                                     <span class="block text-xs">Réservé</span>
                                                 <?php endif; ?>
                                             </div>
@@ -271,16 +211,16 @@ $disponibilites = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
                 </button>
             </div>
 
-            <form id="reservationForm" class="space-y-4" method="post" action="../../php/Sportif/insererReservation.php">
+            <form id="reservationForm" class="space-y-4" method="post" action="../insererReservation">
               <input type="hidden" value="<?= $id_coach ?>" name="id_coach">
               <input type="hidden" value="<?= $id_sportif ?>" name="id_sportif">
                 <!-- Sélection discipline -->
                 <div>
                     <label class="block text-sm font-semibold text-gray-700 mb-2">Discipline *</label>
-                    <select id="discipline" name="sport" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent">
+                    <select id="discipline" name="id_sport" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent">
                         <option value="">Choisir une discipline</option>
                         <?php foreach($sports as $sport): ?>
-                            <option value="<?= htmlspecialchars($sport['nom_sport']) ?>">
+                            <option value="<?= htmlspecialchars($sport['id_sport']) ?>">
                                 <?= htmlspecialchars($sport['nom_sport']) ?>
                             </option>
                         <?php endforeach; ?>
@@ -333,7 +273,7 @@ $disponibilites = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 
             
             disponibilites.forEach(function(dispo) {
-                if (dispo.date === dateSelectionnee && !dispo.isReserved) {
+                if (dispo.date === dateSelectionnee && !dispo.isreserved) {
                     creneauxTrouves = true;
                     creneauxHTML += `
                         <label class="flex items-center p-3 border rounded-lg cursor-pointer hover:bg-purple-50 transition">

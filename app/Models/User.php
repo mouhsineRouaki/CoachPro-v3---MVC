@@ -9,10 +9,11 @@ abstract class User{
     protected string $telephone;
     protected string $role;
     protected string $image;
+    protected string $dateC;
 
     protected PDO $db;
 
-    public function __construct($id , string $nom,string $prenom,string $email,string $password,string $telephone,string $role,?string $image = null) {
+    public function __construct($id , string $nom,string $prenom,string $email,string $password,string $telephone,string $role , ?string $dateC,?string $image = null) {
         $this->db =  Database::getInstance()->getConnection();
         $this->id = $id ;
         $this->nom = $nom;
@@ -22,6 +23,7 @@ abstract class User{
         $this->telephone = $telephone;
         $this->role = $role;
         $this->image = $image;
+        $this->dateC = $dateC;
     }
     public function getId(): ?int {
         return $this->id;
