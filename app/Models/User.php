@@ -13,7 +13,7 @@ abstract class User{
 
     protected PDO $db;
 
-    public function __construct($id , string $nom,string $prenom,string $email,string $password,string $telephone,string $role,?string $image = null , ?string $dateC) {
+    public function __construct($id , string $nom,string $prenom,string $email,string $password,string $telephone,string $role , ?string $dateC,?string $image = null) {
         $this->db =  Database::getInstance()->getConnection();
         $this->id = $id ;
         $this->nom = $nom;
@@ -113,10 +113,7 @@ abstract class User{
     public static function lougoutUser(){
         session_destroy();
     }
-    public function updateInfoUser(): bool {
-        $stmt = $this->db->prepare("UPDATE utilisateur SET nom = ?, prenom = ?, email = ?, telephone = ?, img_utilisateur = ? WHERE id_utilisateur = ?");
-        return $stmt->execute([$this->nom, $this->prenom, $this->email, $this->telephone, $this->image, $this->id]);
-    }
+    abstract public function updateInfoUser();
 
     public function deleteUser(): bool {
         $stmt = $this->db->prepare("DELETE FROM utilisateur WHERE id_utilisateur = ?");

@@ -6,7 +6,7 @@ class Coach extends User{
     private $annee_exp= null ;
     
     public function __construct($user, $coach ){
-        parent::__construct($user["id_utilisateur"],$user["nom"] , $user["prenom"] , $user["email"] , $user["mot_de_pass"], $user["telephone"] , $user["role"] , $user["img_utilisateur"] ,$user["date_creation"] );
+        parent::__construct($user["id_utilisateur"],$user["nom"] , $user["prenom"] , $user["email"] , $user["mot_de_pass"], $user["telephone"] , $user["role"]  ,$user["date_creation"] , $user["img_utilisateur"]);
         $this->id_coach = $coach["id_coach"];
         $this->biographie = $coach["biographie"] ;
         $this->niveau = $coach["niveau"];
@@ -118,6 +118,9 @@ class Coach extends User{
         return $stmt2->execute([$id_disponibilite]);
     }
 
+    public function updateInfoUser(){
+
+    }
 
 
 

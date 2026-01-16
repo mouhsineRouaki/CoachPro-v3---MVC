@@ -1,11 +1,4 @@
-<?php
-require "../../php/Coach/functionCoach.php";
-require "../../php/authentification/checkConnecter.php";
 
-$user = getUtilisateur();
-$coach = getCoach();
-$sports = getSports();
-?>
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -92,7 +85,7 @@ $sports = getSports();
           <div>
             <h2 class="text-2xl font-bold text-gray-800"><?= $coach->nom;?> <?= $coach->prenom;?></h2>
             <p class="text-gray-600">Coach Professionnel</p>
-            <p class="text-sm text-gray-500">Membre depuis le <?= $user->dateC;?></p>
+            <p class="text-sm text-gray-500">Membre depuis le <?= $coach->dateC;?></p>
           </div>
         </div>
       </div>
@@ -136,7 +129,7 @@ $sports = getSports();
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
-                <input type="email" id="email" name="email" value="<?= $user->email ?>" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                <input type="email" id="email" name="email" value="<?= $coach->email ?>" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
               </div>
               <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">Téléphone</label>
@@ -147,7 +140,7 @@ $sports = getSports();
             <div>
               <label class="block text-sm font-medium text-gray-700 mb-2">Niveau</label>
               <select id="niveau" name="niveau" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
-                <option value="<?= $$coach->niveau ?>" selected><?= $coach->niveau ?></option>
+                <option value="<?= $coach->niveau ?>" selected><?= $coach->niveau ?></option>
                 <option value="Débutant">Débutant</option>
                 <option value="Intermédiaire">Intermédiaire</option>
                 <option value="Avancé" >Avancé</option>
@@ -174,7 +167,7 @@ $sports = getSports();
           <form id="bioForm" class="space-y-4">
             <div>
               <label class="block text-sm font-medium text-gray-700 mb-2">Biographie</label>
-              <textarea id="biographie" name="biographie" rows="8" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent" placeholder="Parlez de votre parcours, vos spécialités, votre approche..."><?= $coach["biographie"] ?></textarea>
+              <textarea id="biographie" name="biographie" rows="8" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent" placeholder="Parlez de votre parcours, vos spécialités, votre approche..."><?= $coach->biographie ?></textarea>
             </div>
             
             <div class="flex justify-end pt-4">
@@ -268,7 +261,7 @@ $sports = getSports();
         <select id="sportName" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500">
           <option value="">Sélectionner un sport</option>
           <?php foreach($sports as $sport){?>
-            <option value="<?= $sport['id_sport'] ?>"><?= $sport['nom_sport'] ?></option>
+            <option value="<?= $sport->id_sport ?>"><?= $sport->nom_sport ?></option>
           <?php }?>
         </select>
       </div>
