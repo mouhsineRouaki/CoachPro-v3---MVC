@@ -16,15 +16,32 @@ class CoachRepository
     }
     public  function getCoachById($id_coach){
         $db = Database::getInstance()->getConnection();
-        $stmt = $db->prepare("SELECT c.*,u.img_utilisateur, u.nom, u.prenom, u.email, u.telephone, c.biographie, c.niveau,
-               GROUP_CONCAT(DISTINCT s.nom_sport SEPARATOR ', ') as sports
-            FROM coach c
-            INNER JOIN utilisateur u ON c.id_utilisateur = u.id_utilisateur
-            LEFT JOIN coach_sport cs ON c.id_coach = cs.id_coach
-            LEFT JOIN sport s ON cs.id_sport = s.id_sport
-            where c.id_coach = ?
-            GROUP BY c.id_coach
-            ORDER BY u.nom ASC
+        $stmt = $db->prepare("SELECT 
+        c.id_coach,
+        c.biographie,
+        c.niveau,
+        u.img_utilisateur,
+        u.nom,
+        u.prenom,
+        u.email,
+        u.telephone,
+        STRING_AGG(DISTINCT s.nom_sport, ', ') AS sports
+    FROM coach c
+    INNER JOIN utilisateur u ON c.id_utilisateur = u.id_utilisateur
+    LEFT JOIN coach_sport cs ON c.id_coach = cs.id_coach
+    LEFT JOIN sport s ON cs.id_sport = s.id_sport
+    WHERE c.id_coach = ?
+    GROUP BY 
+        c.id_coach,
+        c.biographie,
+        c.niveau,
+        u.img_utilisateur,
+        u.nom,
+        u.prenom,
+        u.email,
+        u.telephone
+    ORDER BY u.nom ASC
+
         ");
         $stmt->execute([$id_coach]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
@@ -51,11 +68,17 @@ class CoachRepository
 
      public  function getdisponibiliteCoach($id_coach){
         $db = Database::getInstance()->getConnection();
-        $stmt = $db->prepare("SELECT id_disponibilite ,DATE(date) AS date, TIME(heure_debut) AS heure_debut, TIME(heure_fin) AS heure_fin, isReserved
-            FROM disponibilite
-            WHERE id_coach = ?
-            ORDER BY date, heure_debut
-        ");
+        $stmt = $db->prepare("
+    SELECT 
+        id_disponibilite,
+        date::date AS date,
+        heure_debut::time AS heure_debut,
+        heure_fin::time AS heure_fin,
+        isReserved
+    FROM disponibilite
+    WHERE id_coach = ?
+    ORDER BY date, heure_debut
+");
         $stmt->execute([$id_coach]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }

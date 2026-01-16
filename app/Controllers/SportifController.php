@@ -70,10 +70,26 @@ class SportifController{
         $disponibilites = $this->coachRepository->getdisponibiliteCoach($id);
         require_once __DIR__."../../Views/sportif/detailsCoach.php";
 
+    }
+    public function insererReservation(){
+         $id_coach   = $_POST['id_coach'];
+        $id_sport   = $_POST['id_sport'];
+        $id_sportif = $_POST['id_sportif'];
+        $date       = $_POST['date_seance'];
+        $creneaux   = $_POST['creneaux'] ?? [];
 
-        
+        if (empty($creneaux)) {
+            die("Aucun créneau sélectionné.");
+        }
 
 
+
+        foreach ($creneaux as $c) {
+
+            list($id_dispo, $heure_debut, $heure_fin) = explode('-', $c);
+            $this->repo->reserverDisponibiliteByid($id_dispo);
+            $this->repo->insererReservation($id_coach,$id_sportif,$id_dispo,$id_sport,"en_attente");
+        }
     }
     public function getCoachess(){
         $coaches = $this->repo->getCoach();

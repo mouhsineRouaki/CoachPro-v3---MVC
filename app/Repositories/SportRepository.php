@@ -34,4 +34,5 @@ class SportRepository{
         $stmt->execute([$id_sport]);
         return  $stmt->fetch(PDO::FETCH_ASSOC)["total"];
     }
+   
 }

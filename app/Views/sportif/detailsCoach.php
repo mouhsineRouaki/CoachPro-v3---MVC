@@ -172,9 +172,9 @@
                                     <h4 class="font-bold text-gray-800 mb-3"><?= date('l d F Y', strtotime($date)) ?></h4>
                                     <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
                                         <?php foreach($slots as $slot): ?>
-                                            <div class="px-3 py-2 rounded-lg text-center text-sm font-medium <?= $slot['isReserved'] ? 'bg-gray-200 text-gray-500' : 'bg-green-100 text-green-700' ?>">
+                                            <div class="px-3 py-2 rounded-lg text-center text-sm font-medium <?= $slot['isreserved'] ? 'bg-gray-200 text-gray-500' : 'bg-green-100 text-green-700' ?>">
                                                 <?= $slot['heure_debut'] ?> - <?= $slot['heure_fin'] ?>
-                                                <?php if($slot['isReserved']): ?>
+                                                <?php if($slot['isreserved']): ?>
                                                     <span class="block text-xs">Réservé</span>
                                                 <?php endif; ?>
                                             </div>
@@ -273,7 +273,7 @@
 
             
             disponibilites.forEach(function(dispo) {
-                if (dispo.date === dateSelectionnee && !dispo.isReserved) {
+                if (dispo.date === dateSelectionnee && !dispo.isreserved) {
                     creneauxTrouves = true;
                     creneauxHTML += `
                         <label class="flex items-center p-3 border rounded-lg cursor-pointer hover:bg-purple-50 transition">

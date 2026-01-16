@@ -19,7 +19,8 @@ $routes = [
     "sportif/dashboard" => ["SportifController" , "dashboard"],
     "sportif/Coaches" => ["SportifController" , "Coaches"],
     "sportif/getCoaches" => ["SportifController" , "getCoaches"],
-    "sportif/coach/{id}" =>["SportifController" , "detailsCoatch"]
+    "sportif/coach/{id}" =>["SportifController" , "detailsCoatch"],
+    "sportif/insererReservation" =>["SportifController" , "insererReservation"],
 
 ];
 

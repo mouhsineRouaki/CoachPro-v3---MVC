@@ -80,6 +80,20 @@ class SportifRepository
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
+     public function insererReservation($id_coach,$id_sportif,$id_disponibilite,$id_sport,$status){
+        $db = Database::getInstance()->getConnection();
+        $stmt  = $db->prepare("INSERT INTO reservation 
+            (id_sportif, id_coach, id_sport,id_disponibilite,status,date_reservation)
+            VALUES (?,?,?,?,?,NOW())");
+        $stmt->execute([$id_sportif,$id_coach,$id_sport,$id_disponibilite,$status]);
+    }
+    public function reserverDisponibiliteByid($id_disponibilite){
+        $db = Database::getInstance()->getConnection();
+        $stmt  = $db->prepare("UPDATE disponibilite
+            SET isReserved = 1 
+            WHERE id_disponibilite = ?");
+        $stmt->execute([$id_disponibilite]);
+    }
 
 }
 
