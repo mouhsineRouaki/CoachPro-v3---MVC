@@ -1,9 +1,3 @@
-<?php
-require_once "../../php/Sportif/functionSportif.php";
-require "../../php/authentification/checkConnecter.php"; 
-?>
-
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -195,7 +189,7 @@ require "../../php/authentification/checkConnecter.php";
   </div>
 
   <div id="coachGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10 w">
-    <?php getTousLesCoaches()?>
+    <?php echo $coaches?>
   </div>
 
   <!-- Message si aucun résultat -->
@@ -224,7 +218,7 @@ require "../../php/authentification/checkConnecter.php";
     const experience = document.getElementById('experienceFilter').value;
     const date = document.getElementById('availabilityFilter').value;
 
-    const url = `../../php/Sportif/filterCoach.php?recherche=${recherche}&sport=${sport}&experience=${experience}&date=${date}`;
+    const url = `getCoaches`;
 
     fetch(url)
         .then(res => res.text())
@@ -235,7 +229,7 @@ require "../../php/authentification/checkConnecter.php";
 
 document.getElementById('searchInput').addEventListener('input',()=>{
   if(document.getElementById('searchInput').value == ""){
-    document.getElementById('coachGrid').innerHTML = `<?php getTousLesCoaches(); ?>`
+    document.getElementById('coachGrid').innerHTML = `<?php echo $coaches ?>`
   }else{
     updateGrid()
   }
@@ -250,7 +244,7 @@ document.getElementById("resetBtn").addEventListener("click" , ()=>{
   document.getElementById('disciplineFilter').value = "";
   document.getElementById('availabilityFilter').value = "";
   document.getElementById('experienceFilter').value = "";
-  document.getElementById('coachGrid').innerHTML = `<?php getTousLesCoaches(); ?>`
+  document.getElementById('coachGrid').innerHTML = `<?php echo $coaches ?>`
 })
 
 </script>
