@@ -1,39 +1,26 @@
 <?php
 class SportifController{
-    public function loginForm(){
-        require_once __DIR__."../../Views/auth/auth.php";
+
+    private SportifRepository $repo ; 
+    private SportRepository $sportRepository;
+    public function __construct(){
+        $this->repo = new SportifRepository();
+        $this->sportRepository = new SportRepository();
     }
-    public function login() {
-        $email = $_POST["email"];
-        $password = $_POST["password"];
-        $result = User::login($email,$password);
-        if ($result['success']) {
-            if($result["user"]["role"] === "coach"){
-                header("Location: ../../pages/coach/dashbordCoach.php");
-            }else{
-                header("Location: ../../pages/sportif/dashbordSportif.php");
-            }
-            exit();   
-        } else {
-            header("Location: ../../public/index.php?message=" . urlencode($result['message']));
-            exit();      
-        }
-    }
-    public function register() {
-        $email = $_POST["email"];
-        $password = $_POST["password"];
-        $result = User::login($email,$password);
-        if ($result['success']) {
-            if($result["user"]["role"] === "coach"){
-                header("Location: ../../pages/coach/dashbordCoach.php");
-            }else{
-                header("Location: ../../pages/sportif/dashbordSportif.php");
-            }
-            exit();   
-        } else {
-            header("Location: ../../public/index.php?message=" . urlencode($result['message']));
-            exit();      
-        }
+
+    public function dashboard(){
+        $sportif = $this->repo->getConnectedSportif();
+        $coachDispo = $this->repo->getCoachsDisponible();
+        $sc = $this->repo->getNombreReservationByStatus("confirmee");
+        $sen = $this->repo->getNombreReservationByStatus("en_attente");
+        $st = $this->repo->getNombreReservationByStatus("terminee");
+        $nextSession = $sportif->getNextSeance();
+        $fotbal = $this->sportRepository->getNombreCoachParSport("Football");
+        $tennis = $this->sportRepository->getNombreCoachParSport("Tennis");
+        $natation = $this->sportRepository->getNombreCoachParSport("Natation");
+        $fitness = $this->sportRepository->getNombreCoachParSport("Fitness");
+
+        require_once __DIR__."../../Views/sportif/dashboard.php";
     }
 
     public function logout() {

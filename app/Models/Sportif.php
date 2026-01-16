@@ -17,5 +17,25 @@ class Sportif extends User{
     public function __set($name , $value){
         $this->$name = $value ;
     }
+
+    public function getNextSeance(){
+
+        $stmt=  $this->db->prepare("
+            SELECT r.*, c.biographie, u.nom, u.prenom, s.nom_sport,
+                d.date, d.heure_debut, d.heure_fin
+            FROM reservation r
+            INNER JOIN coach c ON r.id_coach = c.id_coach
+            INNER JOIN utilisateur u ON c.id_utilisateur = u.id_utilisateur
+            INNER JOIN sport s ON r.id_sport = s.id_sport
+            INNER JOIN disponibilite d on d.id_disponibilite = r.id_disponibilite
+            WHERE r.id_sportif = ? 
+            AND r.status = 'confirmee'
+            AND d.date >= Now()
+            ORDER BY d.date ASC, d.heure_debut ASC
+            LIMIT 1
+        ");
+        $stmt->execute([$this->id_sportif]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
     
 }

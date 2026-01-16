@@ -16,5 +16,6 @@ $routes = [
     "coach/getReservations" => ["ReservationController" , "getReservations"],
     "coach/confirmReservation" => ["ReservationController" , "confirmReservation"],
     "coach/updateProfil" => ["CoachController" , "updateProfil"],
+    "sportif/dashboard" => ["SportifController" , "dashboard"],
 ];
 

@@ -1,17 +1,11 @@
-<?php
-require_once "../../php/Sportif/functionSportif.php";
-require "../../php/authentification/checkConnecter.php"; 
 
-$user = getUtilisateur();
-$confirmeProchineSeance = confirmeProchaineSeance();
-?>
 
 <!DOCTYPE html>
 <html lang="fr">
 
 <head>
     <meta charset="UTF-8">
-    <title>Dashboard Sportif - Plateforme Sportive<?= $_SESSION["role"] ?></title>
+    <title>Dashboard Sportif - Plateforme Sportive<?= $_SESSION["user_id"] ?></title>
     <link rel='stylesheet'
         href='https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/1.8.12/tailwind-experimental.min.css'>
     <style>
@@ -109,8 +103,8 @@ $confirmeProchineSeance = confirmeProchaineSeance();
                 <button class="inline-flex items-center p-2 hover:bg-gray-100 focus:bg-gray-100 rounded-lg">
                     <span class="sr-only">Menu Utilisateur</span>
                     <div class="hidden md:flex md:flex-col md:items-end md:leading-tight">
-                        <span class="font-semibold"><?= $user["nom"]; $user["prenom"]    ?></span>
-                        <span class="text-sm text-gray-600"><?= $user["date_creation"];    ?></span>
+                        <span class="font-semibold"><?= $sportif->nom; $sportif->prenom    ?></span>
+                        <span class="text-sm text-gray-600"><?= $sportif->dateC;    ?></span>
                     </div>
                     <span class="h-12 w-12 ml-2 sm:ml-3 mr-2 bg-gray-100 rounded-full overflow-hidden">
                         <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
@@ -151,7 +145,7 @@ $confirmeProchineSeance = confirmeProchaineSeance();
         <main id="home" class="page active p-6 sm:p-10 space-y-6">
             <div class="flex flex-col space-y-6 md:space-y-0 md:flex-row justify-between">
                 <div class="mr-6">
-                    <h1 class="text-4xl font-semibold mb-2">Bienvenue <?= $user["prenom"]    ?></h1>
+                    <h1 class="text-4xl font-semibold mb-2">Bienvenue <?= $sportif->prenom    ?></h1>
                     <h2 class="text-gray-600 ml-0.5">Trouvez votre coach idéal et réservez vos séances sportives</h2>
                 </div>
                 <div class="flex flex-wrap items-start justify-end -mb-3">
@@ -177,7 +171,7 @@ $confirmeProchineSeance = confirmeProchaineSeance();
                         </svg>
                     </div>
                     <div>
-                        <span class="block text-2xl font-bold"><?php echo getNombreTotalCoach()?></span>
+                        <span class="block text-2xl font-bold"><?php echo $coachDispo?></span>
                         <span class="block text-gray-500">Coachs disponibles</span>
                     </div>
                 </div>
@@ -191,7 +185,7 @@ $confirmeProchineSeance = confirmeProchaineSeance();
                         </svg>
                     </div>
                     <div>
-                        <span class="block text-2xl font-bold"><?= getNombreReservationsByStatus("confirmee")?></span>
+                        <span class="block text-2xl font-bold"><?= $sc?></span>
                         <span class="block text-gray-500">Séances confirmées</span>
                     </div>
                 </div>
@@ -205,7 +199,7 @@ $confirmeProchineSeance = confirmeProchaineSeance();
                         </svg>
                     </div>
                     <div>
-                        <span class="block text-2xl font-bold"><?php echo getNombreReservationsByStatus("en_attente")?></span>
+                        <span class="block text-2xl font-bold"><?= $sen?></span>
                         <span class="block text-gray-500">En attente</span>
                     </div>
                 </div>
@@ -219,7 +213,7 @@ $confirmeProchineSeance = confirmeProchaineSeance();
                         </svg>
                     </div>
                     <div>
-                        <span class="block text-2xl font-bold"><?php echo getNombreReservationsByStatus("terminee")?></span>
+                        <span class="block text-2xl font-bold"><?= $st?></span>
                         <span class="block text-gray-500">Séances terminées</span>
                     </div>
                 </div>
@@ -228,14 +222,14 @@ $confirmeProchineSeance = confirmeProchaineSeance();
             <section class="grid md:grid-cols-2 gap-6">
                 <div class="bg-white shadow rounded-lg p-6">
                     <h3 class="text-xl font-semibold mb-4">Prochaine Séance</h3>
-                    <?php if($confirmeProchineSeance){?>
+                    <?php if($nextSession){?>
                     <div class="flex items-center mb-4">
                         <div class="h-16 w-16 mr-4 bg-gray-100 rounded-full overflow-hidden">
                             <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
                                 alt="Coach">
                         </div>
                         <div class="flex-grow">
-                            <h4 class="text-lg font-semibold">Mohamed Coach</h4>
+                            <h4 class="text-lg font-semibold"><?= $nextSession["nom"]?> <?= $nextSession["prenom"]?></h4>
                             <p class="text-gray-600">Coach Professionnel</p>
                         </div>
                     </div>
@@ -246,7 +240,7 @@ $confirmeProchineSeance = confirmeProchaineSeance();
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
                             </svg>
-                            <span>Préparation Physique</span>
+                            <span><?= $nextSession["nom_sport"]?></span>
                         </div>
                         <div class="flex items-center text-gray-700">
                             <svg class="h-5 w-5 mr-3 text-purple-600" fill="none" viewBox="0 0 24 24"
@@ -254,7 +248,7 @@ $confirmeProchineSeance = confirmeProchaineSeance();
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                             </svg>
-                            <span>Demain, 18 Décembre 2024</span>
+                            <span><?= $nextSession["date"]?></span>
                         </div>
                         <div class="flex items-center text-gray-700">
                             <svg class="h-5 w-5 mr-3 text-purple-600" fill="none" viewBox="0 0 24 24"
@@ -262,7 +256,7 @@ $confirmeProchineSeance = confirmeProchaineSeance();
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
-                            <span>10:00 - 11:30</span>
+                            <span><?= $nextSession["heure_debut"]?> - <?= $nextSession["heure_fin"]?></span>
                         </div>
                     </div>
                     <button class="mt-4 w-full px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700">Voir
@@ -285,7 +279,7 @@ $confirmeProchineSeance = confirmeProchaineSeance();
                                     ⚽</div>
                                 <span class="font-semibold">Football</span>
                             </div>
-                            <span class="text-sm text-gray-600"><?php echo getNombreCoachParSport("Football")?> coachs</span>
+                            <span class="text-sm text-gray-600"><?php echo $fotbal?> coachs</span>
                         </div>
                         <div class="flex items-center justify-between p-3 bg-blue-50 rounded-lg">
                             <div class="flex items-center">
@@ -294,7 +288,7 @@ $confirmeProchineSeance = confirmeProchaineSeance();
                                     🎾</div>
                                 <span class="font-semibold">Tennis</span>
                             </div>
-                            <span class="text-sm text-gray-600"><?php echo getNombreCoachParSport("Tennis")?> coachs</span>
+                            <span class="text-sm text-gray-600"><?php echo $tennis?> coachs</span>
                         </div>
                         <div class="flex items-center justify-between p-3 bg-green-50 rounded-lg">
                             <div class="flex items-center">
@@ -303,7 +297,7 @@ $confirmeProchineSeance = confirmeProchaineSeance();
                                     🏊</div>
                                 <span class="font-semibold">Natation</span>
                             </div>
-                            <span class="text-sm text-gray-600"><?php echo getNombreCoachParSport("Natation")?> coachs</span>
+                            <span class="text-sm text-gray-600"><?php echo $natation?> coachs</span>
                         </div>
                         <div class="flex items-center justify-between p-3 bg-orange-50 rounded-lg">
                             <div class="flex items-center">
@@ -311,7 +305,7 @@ $confirmeProchineSeance = confirmeProchaineSeance();
                                     class="h-10 w-10 bg-orange-600 rounded-full flex items-center justify-center text-white font-bold mr-3"></div>
                                 <span class="font-semibold">Fitness</span>
                             </div>
-                            <span class="text-sm text-gray-600"><?php echo getNombreCoachParSport("Fitness")?> coachs</span>
+                            <span class="text-sm text-gray-600"><?php echo $fitness?> coachs</span>
                         </div>
                     </div>
                 </div>
