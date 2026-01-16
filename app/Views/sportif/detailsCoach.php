@@ -211,7 +211,7 @@
                 </button>
             </div>
 
-            <form id="reservationForm" class="space-y-4" method="post" action="../../php/Sportif/insererReservation.php">
+            <form id="reservationForm" class="space-y-4" method="post" action="../insererReservation">
               <input type="hidden" value="<?= $id_coach ?>" name="id_coach">
               <input type="hidden" value="<?= $id_sportif ?>" name="id_sportif">
                 <!-- Sélection discipline -->

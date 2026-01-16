@@ -90,7 +90,7 @@ class SportifRepository
     public function reserverDisponibiliteByid($id_disponibilite){
         $db = Database::getInstance()->getConnection();
         $stmt  = $db->prepare("UPDATE disponibilite
-            SET isReserved = 1 
+            SET isreserved = true
             WHERE id_disponibilite = ?");
         $stmt->execute([$id_disponibilite]);
     }

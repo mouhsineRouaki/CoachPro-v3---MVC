@@ -65,6 +65,7 @@ class SportifController{
         $sportif = $this->repo->getConnectedSportif();
         $id_sportif =  $sportif->id_sportif;
         $coach = $this->coachRepository->getCoachById($id);
+        $id_coach = $id;
         $sports = $this->coachRepository->getSportsCoach($id);
         $experiences = $this->coachRepository->getExperiencesCoach($id);
         $disponibilites = $this->coachRepository->getdisponibiliteCoach($id);
@@ -90,6 +91,7 @@ class SportifController{
             $this->repo->reserverDisponibiliteByid($id_dispo);
             $this->repo->insererReservation($id_coach,$id_sportif,$id_dispo,$id_sport,"en_attente");
         }
+        header("location: coach/".$id_coach);
     }
     public function getCoachess(){
         $coaches = $this->repo->getCoach();
@@ -98,6 +100,10 @@ class SportifController{
             $html.= self::createCoachCard($c);
         }
         return $html;
+    }
+    public function reservationsPage(){
+        require_once __DIR__."../../Views/sportif/detailsCoach.php";
+
     }
 
 
